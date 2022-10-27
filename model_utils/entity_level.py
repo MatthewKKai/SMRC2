@@ -11,3 +11,5 @@ class entity_level(Module):
     def graph_creation(self):
         pass
 
+    def masking(self):
+        pass
