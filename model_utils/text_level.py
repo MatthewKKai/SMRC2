@@ -8,6 +8,6 @@ class text_level(Module):
         self.biobert = BertModel.from_pretrained(r"") # add parameter later
         pass
 
-    def graph_creation(self):
+    def pair_sampling(self):
         pass
 
