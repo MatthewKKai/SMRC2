@@ -17,3 +17,8 @@ class GCN(Module):
         pass
         # return node_representation, edge_representation
 
+class Attention_Gate(nn.Module):
+    def __init__(self, config):
+        super(Attention_Gate, self).__init__()
+        self.config = config
+
