@@ -10,8 +10,8 @@ class GCN(Module):
     def msg_receive(self):
         pass
 
-    def msg_processing(self):
-        pass
+    # def msg_processing(self):
+    #     pass
 
     def forward(self):
         pass
@@ -21,4 +21,5 @@ class Attention_Gate(nn.Module):
     def __init__(self, config):
         super(Attention_Gate, self).__init__()
         self.config = config
+
 
