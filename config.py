@@ -11,6 +11,9 @@ def get_opt():
     # text configs
     parser.add_argument()
 
+    # biobert
+    parser.add_argument()
+
     # Graph Configs
     parser.add_argument()
 
