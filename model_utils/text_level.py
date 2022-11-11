@@ -13,3 +13,5 @@ class text_level(Module):
     def pair_sampling(self):
         pass
 
+    def forward(self):
+        pass
