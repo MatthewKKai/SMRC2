@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import json
 import scispacy, spacy
 import pubmed_parser as pp
 
@@ -9,11 +10,11 @@ def get_pmid():
 
 def get_abs():
 
-    return abstract
+    return abstraction
 
 def get_intro():
 
-    return introduction
+    return intro
 
 def get_citanace():
 
@@ -23,4 +24,14 @@ def get_citation():
 
     return citation
 
+def dump_data(address):
+    pmid = get_pmid()
+    abstraction = get_abs()
+    introduction = get_intro()
+    citance = get_citanace()
+    citation = get_citation()
+    data = dict()
+    with open(address, "w") as f:
+        json.dump(data, address)
+    return data
 
