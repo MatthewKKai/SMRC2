@@ -221,6 +221,9 @@ def create_statistic_graph(triple_path):
 
     return g
 
+def dump_data():
+    pass
+
 
 
 if __name__=="__main__":
