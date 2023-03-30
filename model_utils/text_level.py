@@ -10,9 +10,6 @@ class text_level(Module):
         self.biobert = BertModel.from_pretrained(r"") # add parameter later
         pass
 
-    def pair_sampling(self):
-        pass
-
     def forward(self):
         pass
 
