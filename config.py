@@ -8,20 +8,27 @@ def get_opt():
     # ......
 
     # paths
-    parser.add_argument()
+    parser.add_argument('--data_path', type=str, default='./data.json')
 
     # checkpoints
     parser.add_argument()
 
-    # text configs
-    parser.add_argument()
+    # text module configs
+    parser.add_argument('--d_transformer', type=int, default=512)
+    parser.add_argument('--nhead', type=int, default=8)
+    parser.add_argument('--num_layers', type=int, default=6)
 
-    # biobert
-    parser.add_argument()
+    # pretrained mdoel parameters
+    parser.add_argument('--version', type=str, default='dmis-lab/biobert-base-cased-v1.2')
+    parser.add_argument('--maximum_len', type=int, default=512)
 
     # Graph Configs
-    parser.add_argument()
+    parser.add_argument('--d_graph', type=int, default=512)
 
     # Training Configs
-    parser.add_argument()
+    parser.add_argument('--drop_out', type=float, default=0.3)
+    parser.add_argument('--learning_rate', type=float, default=0.001)
+
+    # return args
+    return parser.parse_args()
 
