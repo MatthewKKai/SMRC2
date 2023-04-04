@@ -17,14 +17,31 @@ estimator = PCA(n_components=3)
 # s1 = r"I love apple"
 # s2 = [abs1, abs2, abs3]
 
+# label -> color
+labels2color = {'cardiovascular diseases': 'red',
+'chronic kidney disease': 'purple',
+'chronic respiratory diseases': 'grey',
+'ciabetes mellitus': 'white',
+'cigestive diseases': 'blue',
+'hiv/aids': 'black',
+'hepatitis a/b/c/e': 'green',
+'mental disorders': 'yellow',
+'musculoskeletal disorders': 'pink',
+'neoplasms (cancer)': 'orange',
+'neurological disorders': 'brown'}
+
+
 # load data
 with open(r"data.json", 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 text = []
+color = []
 for i in range(100):
     temp = data[i]['abs']
     text.append(temp)
+    color_transit = data[i]['label'][0]
+    color.append(labels2color[color_transit])
 
 print(len(text))
 
@@ -63,7 +80,7 @@ xx = pca_output[..., 0]
 print(len(xx))
 yy = pca_output[..., 1]
 zz = pca_output[..., 2]
-ax.scatter(xx, yy, zz)
-for i in range(len(xx)):
-    ax.text(xx[i], yy[i], zz[i], data[i]['label'][0])
+ax.scatter(xx, yy, zz, c=color)
+# for i in range(len(xx)):
+#     ax.text(xx[i], yy[i], zz[i], data[i]['label'][0])
 plt.show()
