@@ -2,7 +2,7 @@ from torch import nn
 from torch.nn import Module
 import torch
 import config
-from transformers import BertModel
+from transformers import BertModel, BertTokenizer
 
 Config = config.get_opt()
 
@@ -10,11 +10,20 @@ Config = config.get_opt()
 class text_encoder(Module):
     def __init__(self, Config):
         self.Config = Config
-        self.biobert = BertModel.from_pretrained(r"") # add parameter later
-        self.transformer = nn.Transformer(self.Config.d_transformer, batch_first=True)
+        self.tokenizer = BertTokenizer.from_pretrained(Config.version)
+        self.pretrain_model = BertModel.from_pretrained(Config.version) # add parameter later
+        self.transformer_layer = nn.TransformerEncoderLayer(d_model=Config.d_transformer, nhead=Config.nhead)
+        self.transformer_encoder = nn.TransformerEncoder(encoder_layer=self.transformer_layer, num_layers=Config.num_layers)
+        self.linear = nn.Linear(768, 512)
 
-    def forward(self):
-        pass
+    def forward(self, text):
+        # get embedding
+        inputs = self.tokenizer(text, max_length=512, truncation=True, padding=True, return_tensors='pt')
+        initial_embedding = self.pretrain_model(**inputs)
+        initial_embedding_transit = self.transformer_encoder(initial_embedding['pooler_output'])
+        out = self.linear(initial_embedding_transit)
+
+        return out
 
 
 
