@@ -1,24 +1,26 @@
-import scispacy, spacy
+from torch.utils.data import Dataset
 import json
-import pandas as pd
-import numpy as np
-import re
-import os
-import torch
-import dgl
-import nltk
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from tqdm import tqdm
-import pubmed_parser as pp
-from collections import Counter
+
+
+class create_dataset(Dataset):
+    def __init__(self, data_path):
+        try:
+            with open(data_path, 'r', encoding='utf-8') as f:
+                self.data = json.load(f)
+        except Exception as e:
+            print("Please provide correct data path or correct data form")
 
 
 
-def dump_data():
-    pass
+
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, index):
+        abs = self.data[index]['abs']
+        label = self.data[index]['label']
+
+        return abs, label
 
 
 
-if __name__=="__main__":
-    pass
