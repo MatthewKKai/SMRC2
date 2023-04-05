@@ -11,7 +11,7 @@ def get_opt():
     parser.add_argument('--data_path', type=str, default='./data.json')
 
     # checkpoints
-    parser.add_argument()
+    # parser.add_argument()
 
     # text module configs
     parser.add_argument('--d_transformer', type=int, default=512)
@@ -27,6 +27,8 @@ def get_opt():
 
     # Training Configs
     parser.add_argument('--drop_out', type=float, default=0.3)
+    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--epoch', type=int, default=100)
     parser.add_argument('--learning_rate', type=float, default=0.001)
 
     # return args
