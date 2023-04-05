@@ -69,7 +69,7 @@ print(output2_tensor.detach().numpy().shape)
 # using pca
 pca_output = estimator.fit_transform(output2_tensor.detach().numpy())
 print(pca_output.shape)
-print(pca_output)
+# print(pca_output)
 
 # kde1 = KernelDensity(kernel="gaussian", bandwidth=0.2).fit(output1_tensor.detach().numpy())
 # kde2 = KernelDensity(kernel="gaussian", bandwidth=0.2).fit(output1)
