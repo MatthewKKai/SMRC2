@@ -18,7 +18,7 @@ class create_dataset(Dataset):
 
     def __getitem__(self, index):
         abs = self.data[index]['abs']
-        label = self.data[index]['label']
+        label = self.data[index]['label'][0]
 
         return abs, label
 
