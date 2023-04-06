@@ -5,6 +5,7 @@ from torch import nn
 import torch
 from torch.utils.data import DataLoader
 from data_loader import create_dataset
+import numpy as np
 import os
 
 Config = config.get_opt()
@@ -43,6 +44,8 @@ def train():
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.AdamW(textEncoder.parameters(), lr=Config.learning_rate)
 
+    text = []
+
     # training
     for i in range(epoch):
         total_loss = 0.0
@@ -50,6 +53,7 @@ def train():
         for abs, label in dataloader:
             optimizer.zero_grad()
             out = textEncoder(abs)
+            text.append(abs)
             # print(out.shape)
             label_id = torch.tensor([labels2ids[label[0]]])
             # print(label_id)
@@ -60,6 +64,9 @@ def train():
             # print
             total_loss += loss.item()
             print('total_loss is: {}'.format(total_loss))
+
+    out_embedding = textEncoder(text)
+    np.savetxt(r"temp_embedding.txt", np.array(out_embedding))
 
     print("Finished")
 
