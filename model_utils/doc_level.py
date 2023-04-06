@@ -3,9 +3,9 @@ import numpy as np
 from torch.nn import Module
 
 class doc_level(Module):
-    def __init__(self, config):
-        super(doc_level)
-        self.config = config
+    def __init__(self, Config):
+        super(doc_level, self).__init__()
+        self.config = Config
         pass
 
 
