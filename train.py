@@ -32,6 +32,7 @@ def train():
         'shuffle': True
     }
     epoch = 10
+    text = []
 
     # prepare data
     dataset = create_dataset('./data.json')
@@ -44,7 +45,12 @@ def train():
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.AdamW(textEncoder.parameters(), lr=Config.learning_rate)
 
-    text = []
+    for abs, label in dataloader:
+        text.append(abs[0])
+    print(len(text))
+    # print(text[0])
+    # test__ = textEncoder(text[:100])
+    # print(test__.shape)
 
     # training
     for i in range(epoch):
@@ -53,7 +59,6 @@ def train():
         for abs, label in dataloader:
             optimizer.zero_grad()
             out = textEncoder(abs)
-            text.append(abs)
             # print(out.shape)
             label_id = torch.tensor([labels2ids[label[0]]])
             # print(label_id)
