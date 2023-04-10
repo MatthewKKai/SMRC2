@@ -80,7 +80,6 @@ xx = pca_output[..., 0]
 print(len(xx))
 yy = pca_output[..., 1]
 zz = pca_output[..., 2]
+
 ax.scatter(xx, yy, zz, c=color)
-# for i in range(len(xx)):
-#     ax.text(xx[i], yy[i], zz[i], data[i]['label'][0])
 plt.show()
