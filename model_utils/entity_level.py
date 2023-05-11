@@ -6,25 +6,25 @@ from transformers import BertTokenizer, BertModel
 
 # entities_library_path = r'./entities2ids'
 
-class entity_level(Module):
+class entity_encoder(Module):
     def __init__(self, Config):
-        super(entity_level, self).__init__()
+        super(entity_encoder, self).__init__()
         self.config = Config
         self.nlp = spacy.load(Config.ner_corpus)
         self.pretrained_model = BertModel.from_pretrained(Config.version)
         self.tokenizer = BertTokenizer.from_pretrained(Config.version)
-        self.gcn = nn.Sequential(
-            GCN(768, Config.gcn_dim),
-            GCN(Config.gcn_dim, 768)
-        )
+        self.gcn = GCN(768, 768, 'relu')
         self.fc = nn.Linear(768, 512)
 
 
     def forward(self, abs):
-        entities = list(self.entity_extraction(abs))
+        entities = ''
+        for ent in self.entity_extraction(abs):
+            entities = entities + ' ' + str(ent)
         entity_tokens = self.tokenizer(entities, max_length=100, truncation=True, padding=True, return_tensors='pt')
         entity_initial_features = self.pretrained_model(**entity_tokens)
-        out, features = self.gcn(entity_initial_features['pooler_output'])
+        print(entity_initial_features['pooler_output'].shape)
+        out, features = self.gcn(entity_initial_features['pooler_output'], torch.randn(1, 1))
 
         return self.fc(features)
 
