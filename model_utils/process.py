@@ -5,7 +5,7 @@ import numpy as np
 import pickle as pkl
 import networkx as nx
 import scipy.sparse as sp
-from .logreg import LogReg
+# from .logreg import LogReg
 
 
 ###############################################
