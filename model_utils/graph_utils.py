@@ -29,7 +29,11 @@ class GCN(nn.Module):
 
     def forward(self, seq, adj):
         seq_fts = self.fc(seq)
-        out = torch.unsqueeze(torch.spmm(adj, torch.squeeze(seq_fts, 0)), 0)
+        # print("shape of seq_fts is: {}".format(seq_fts.shape))
+        # print("shape of adj is: {}".format(adj.shape))
+        # print("Shape of sequenced seq_fts is: {}".format(torch.squeeze(seq_fts).shape))
+        # out = torch.unsqueeze(torch.spmm(adj, torch.squeeze(seq_fts, 0)), 0)
+        out = torch.unsqueeze(torch.spmm(adj, seq_fts), 0)
 
         if self.bias is not None:
             out += self.bias
