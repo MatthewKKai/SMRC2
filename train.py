@@ -1,4 +1,5 @@
 from model_utils.text_level import text_encoder
+from model_utils.entity_level import entity_encoder
 import config
 from torch import optim
 from torch import nn
@@ -40,6 +41,7 @@ def train():
 
     # load models
     textEncoder = text_encoder(Config)
+    entityEncoder = entity_encoder(Config)
 
     # create optimizer
     criterion = nn.CrossEntropyLoss()
@@ -58,8 +60,13 @@ def train():
         print('----------Epoch {}---------'.format(i))
         for abs, label in dataloader:
             optimizer.zero_grad()
-            out = textEncoder(abs)
-            # print(out.shape)
+            # print(abs)
+            text_out = textEncoder(abs[0])
+            entity_out = entityEncoder(abs[0])
+            print(text_out.shape)
+            print(entity_out.shape)
+            out = torch.concat((text_out, entity_out), 0)
+
             label_id = torch.tensor([labels2ids[label[0]]])
             # print(label_id)
             loss = criterion(out, label_id)
