@@ -21,9 +21,11 @@ class entity_encoder(Module):
         entities = ''
         for ent in self.entity_extraction(abs):
             entities = entities + ' ' + str(ent)
+        # print(entities)
         entity_tokens = self.tokenizer(entities, max_length=100, truncation=True, padding=True, return_tensors='pt')
+        # print(len(entity_tokens))
         entity_initial_features = self.pretrained_model(**entity_tokens)
-        print(entity_initial_features['pooler_output'].shape)
+        # print("shape of entity_features: {}".format(entity_initial_features['pooler_output'].shape))
         out, features = self.gcn(entity_initial_features['pooler_output'], torch.randn(1, 1))
 
         return self.fc(features)
