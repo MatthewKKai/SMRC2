@@ -2,12 +2,15 @@ import numpy as np
 import torch
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from sklearn.manifold import TSNE
 from sklearn.neighbors import KernelDensity
 from transformers import BertModel, BertTokenizer
 from sklearn.decomposition import PCA
 import json
 
-estimator = PCA(n_components=3)
+# decomposition definition
+estimator = PCA(n_components=2)
+tSNE = TSNE(n_components=2, perplexity=30, n_iter=250)
 
 # abs1 = r'his review explores similarities between lymphocytes and cancer cells, and proposes a new model for the genesis of human cancer. we suggest that the development of cancer requires infection(s) during which antigenic determinants from pathogens mimicking self-antigens are co-presented to the immune system, leading to breaking t cell tolerance. some level of autoimmunity is normal and necessary for effective pathogen eradication. however, autoreactive t cells must be eliminated by apoptosis when the immune response is terminated. apoptosis can be deficient in the event of a weakened immune system, the causes of which are multifactorial. some autoreactive t cells suffer genomic damage in this process, but manage to survive. the resulting cancer stem cell still retains some functions of an inflammatory t cell, so it seeks out sites of inflammation inside the body. due to its defective constitutive production of inflammatory cytokines and other growth factors, a stroma is built at the site of inflammation similar to the temporary stroma built during wound healing. the cancer cells grow inside this stroma, forming a tumor that provides their vascular supply and protects them from cellular immune response.</p><p>as cancer stem cells have plasticity comparable to normal stem cells, interactions with surrounding normal tissues cause them to give rise to all the various types of cancers, resembling differentiated tissue types. metastases form at an advanced stage of the disease, with the proliferation of sites of inflammation inside the body following a similar mechanism. immunosuppressive cancer therapies inadvertently re-invigorate pathogenic microorganisms and parasitic infections common to cancer, leading to a vicious circle of infection, autoimmunity and malignancy that ultimately dooms cancer patients. based on this new understanding, we recommend a systemic approach to the development of cancer therapies that supports rather than antagonizes the immune system.'
 # abs2 = r'given the fundamental principle that cancer must arise from a cell that has the potential to divide, two major nonexclusive hypotheses of the cellular origin of cancer are that malignancy arises a) from stem cells due to maturation arrest or b) from dedifferentiation of mature cells that retain the ability to proliferate. the role of stem cells in carcinogenesis is clearly demonstrated in teratocarcinomas. the malignant stem cells of teratocarcinomas are derived from normal multipotent stem cells and have the potential to differentiate into normal benign mature tissue. a widely studied model supporting dedifferentiation has been the putative origin of hepatocarcinomas from "premalignant" foci and nodules induced in the rat liver by chemicals. however, the dedifferentiation concept for hepatocarcinogenesis is challenged by more recent interpretations indicating that hepatocellular carcinoma arises from maturation arrest caused by aberrant differentiation of determined stem cells. either hypothesis is supported by the cellular changes that occur in the rodent liver after different hepatocarcinogenic regimens. the formation of foci and nodules from altered hepatocytes supports dedifferentiation; the proliferation of small oval cells with the potential to differentiate into either biliary ducts or hepatocytes supports arrested maturation of determined stem cells. it is now postulated that foci and nodular change reflect adaptive changes to the toxic effects of carcinogens and not "preneoplastic" stages to cancer. the stem cell model predicts that genotoxic chemicals induce mutations in the determined stem cell which may be expressed in its progeny. proliferation of initiated cells is induced by promoting events which also allow additional mutations to occur.'
@@ -67,19 +70,25 @@ output2_tensor = output2.pooler_output
 print(output2_tensor.detach().numpy().shape)
 
 # using pca
-pca_output = estimator.fit_transform(output2_tensor.detach().numpy())
-print(pca_output.shape)
+# pca_output = estimator.fit_transform(output2_tensor.detach().numpy())
+# print(pca_output.shape)
 # print(pca_output)
+
+# using t-SNE
+tSNE_output = tSNE.fit_transform(output2_tensor.detach().numpy())
 
 # kde1 = KernelDensity(kernel="gaussian", bandwidth=0.2).fit(output1_tensor.detach().numpy())
 # kde2 = KernelDensity(kernel="gaussian", bandwidth=0.2).fit(output1)
 # print(output1_tensor.detach().numpy().reshape(-1, 2))
-fig = plt.figure()
-ax = Axes3D(fig)
-xx = pca_output[..., 0]
-print(len(xx))
-yy = pca_output[..., 1]
-zz = pca_output[..., 2]
+# fig = plt.figure()
+# ax = Axes3D(fig)
+# xx = pca_output[..., 0]
+# print(len(xx))
+# yy = pca_output[..., 1]
+# zz = pca_output[..., 2]
 
-ax.scatter(xx, yy, zz, c=color)
+xx = tSNE_output[..., 1]
+yy = tSNE_output[..., 1]
+
+plt.scatter(xx, yy, c=color)
 plt.show()
