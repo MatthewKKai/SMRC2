@@ -1,6 +1,6 @@
 # Graph_Representation_Learning
 
-Source Code for paper "Single to Multi: Representation Learning for Scientific Multi-Documents"
+Source Code for paper "Content- and Topology-Aware Representation Learning for Scientific Multi-Literature"
 
 
 ## Requirements
