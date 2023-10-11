@@ -1,4 +1,4 @@
-# Graph_Representation_Learning
+# SMRC^2
 
 Source Code for paper "Content- and Topology-Aware Representation Learning for Scientific Multi-Literature"
 
